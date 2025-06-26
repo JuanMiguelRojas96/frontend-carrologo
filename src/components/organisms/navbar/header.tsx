@@ -47,6 +47,9 @@ const Navbar = () => {
               <NavLink to="/vehiculos" onClick={() => setMenuOpen(false)}>
                 Vehiculos
               </NavLink>
+              <NavLink to="/transacciones" onClick={() => setMenuOpen(false)}>
+                Transacciones
+              </NavLink>
             </div>
           </div>
 
