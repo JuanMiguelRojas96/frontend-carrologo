@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { FieldConfig } from "../../../interfaces/modal-form.interface";
 import * as Yup from "yup";
 import MultiStepModal from "../../organisms/multi-step-modal/MultiStepModal";
@@ -120,8 +120,6 @@ export const ModalCreateVehicle = ({ onClose, onVehicleCreated }: ModalCreateVeh
       setCurrentStep((prev) => prev - 1);
     }
   };
-
-  const currentFields = steps[currentStep].fields;
 
   return (
     <MultiStepModal
