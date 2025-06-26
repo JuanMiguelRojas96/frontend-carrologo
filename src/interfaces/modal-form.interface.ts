@@ -13,3 +13,8 @@ export interface FieldConfig {
   value?: string | Dayjs | null; // For disabled fields or default values
   multiple?: boolean;
 }
+
+export interface StepConfig {
+  title: string;
+  fields: FieldConfig[];
+}
