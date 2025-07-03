@@ -6,6 +6,10 @@ import Typography from '@mui/material/Typography';
 import { Dialog } from '@mui/material';
 import { Vehicle } from '../../../interfaces/vehicles.interface';
 import { ModalViewVehicle } from '../../templates/modal-view-vehicle/ModalViewVehicle';
+import IconButton from '@mui/material/IconButton';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckIcon from '@mui/icons-material/Check';
 
 import './vehicleTable.css';
 
@@ -65,7 +69,49 @@ export default function VehicleTable({ vehicles }: Readonly<VehicleTableProps>) 
       width: 100,
       renderCell: (params) => (params.value ? 'Sí' : 'No'),
     },
+    {
+      field: "edit",
+      headerName: "",
+      width: 60,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <IconButton
+          aria-label="editar"
+          color="primary"
+          onClick={() => handleEditClient(params.row)}
+        >
+          <ModeEditIcon />
+        </IconButton>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "",
+      width: 60,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <IconButton
+          aria-label={params.row.isActive ? "desactivar cliente" : "activar cliente"}
+          color={params.row.isActive ? "error" : "success"}
+          onClick={() => handleOpenDeleteModal(params.row)}
+        >
+          {params.row.isActive ? <DeleteIcon /> : <CheckIcon />}
+        </IconButton>
+      ),
+    },
   ];
+
+const handleOpenDeleteModal = (vehicle: Vehicle) => {
+  // Lógica para abrir el modal de eliminación
+  console.log("Abrir modal de eliminación para el vehículo:", vehicle);
+};
+
+const handleEditClient = (vehicle: Vehicle) => {
+  // Lógica para editar el vehículo
+  console.log("Editar vehículo:", vehicle);
+};
 
   return (
     <div className="vehicletable-container">
