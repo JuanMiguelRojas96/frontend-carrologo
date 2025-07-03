@@ -12,6 +12,7 @@ import {
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { styled } from "@mui/material/styles";
 import { StepConfig } from "../../../interfaces/modal-form.interface";
+import { FormikValues } from "formik";
 
 interface MultiStepModalProps {
   open: boolean;
@@ -25,6 +26,7 @@ interface MultiStepModalProps {
   onSubmit: () => void;
   isSubmitting?: boolean;
   canProceed?: boolean;
+  initialValues: FormikValues;
 }
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({

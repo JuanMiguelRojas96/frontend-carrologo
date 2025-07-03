@@ -133,6 +133,7 @@ export const ModalCreateVehicle = ({ onClose, onVehicleCreated }: ModalCreateVeh
       onSubmit={formik.handleSubmit}
       isSubmitting={formik.isSubmitting}
       canProceed={true}
+      initialValues={formik.initialValues}
     >
       {/* Renderiza los campos del paso actual */}
       {steps.map((step, index) => (
