@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
-import SimplePagination from '../../atoms/simple-pagination/SimplePagination';
 
 import './vehicleTable.css';
 
@@ -134,19 +133,7 @@ const handleEditClient = (vehicle: Vehicle) => {
         >
           Vehículos
         </Typography>
-
-        {/* Paginador superior */}
-        {pagination && (
-          <SimplePagination
-            currentPage={paginationModel.page + 1}
-            totalItems={pagination.total}
-            itemsPerPage={paginationModel.pageSize}
-            onPageChange={(page) => onPaginationChange(page, paginationModel.pageSize)}
-            onItemsPerPageChange={(pageSize) => onPaginationChange(1, pageSize)}
-            position="top"
-          />
-        )}
-
+        
         <DataGrid
           rows={vehicles}
           columns={columns}
