@@ -10,21 +10,29 @@ import IconButton from '@mui/material/IconButton';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CheckIcon from '@mui/icons-material/Check';
+import SimplePagination from '../../atoms/simple-pagination/SimplePagination';
 
 import './vehicleTable.css';
 
 interface VehicleTableProps {
   vehicles: Vehicle[];
+  pagination?: { page: number; total: number };
+  paginationModel: { page: number; pageSize: number };
+  onPaginationChange: (page: number, pageSize: number) => void;
 }
 
-export default function VehicleTable({ vehicles }: Readonly<VehicleTableProps>) {
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 10,
-  });
+export default function VehicleTable({ 
+  vehicles, 
+  pagination, 
+  paginationModel, 
+  onPaginationChange 
+}: Readonly<VehicleTableProps>) {
+  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null); // Estado para el vehículo seleccionado
-  const [isModalOpen, setIsModalOpen] = useState(false); // Estado para controlar el modal
+  const handlePaginationModelChange = (newModel: { page: number; pageSize: number }) => {
+    onPaginationChange(newModel.page + 1, newModel.pageSize);
+  };
 
   const handleViewVehicles = (vehicle: Vehicle) => {
     setSelectedVehicle(vehicle);
@@ -127,12 +135,26 @@ const handleEditClient = (vehicle: Vehicle) => {
           Vehículos
         </Typography>
 
+        {/* Paginador superior */}
+        {pagination && (
+          <SimplePagination
+            currentPage={paginationModel.page + 1}
+            totalItems={pagination.total}
+            itemsPerPage={paginationModel.pageSize}
+            onPageChange={(page) => onPaginationChange(page, paginationModel.pageSize)}
+            onItemsPerPageChange={(pageSize) => onPaginationChange(1, pageSize)}
+            position="top"
+          />
+        )}
+
         <DataGrid
           rows={vehicles}
           columns={columns}
           localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
+          onPaginationModelChange={handlePaginationModelChange}
+          paginationMode="server"
+          rowCount={pagination?.total || 0}
           onCellDoubleClick={(params) => {
             if (params.field === "delete" || params.field === "edit") return;
             handleViewVehicles(params.row);

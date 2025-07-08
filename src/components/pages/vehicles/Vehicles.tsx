@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
-import { Vehicle } from "../../../interfaces/vehicles.interface";
+import { VehiclesTableData } from "../../../interfaces/vehicles.interface";
 import TabsVehicles from "../../molecules/tabs/TabsVehicles";
 import { getVehicles } from "../../../services/vehicles.service";
 
 
 const Vehicles = () => {
 
-  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
-  const fetchVehicles = async () => {
+  const [vehiclesData, setVehiclesData] = useState<VehiclesTableData>({} as VehiclesTableData);
+  
+  const fetchVehicles = async (page: number = 1, limit: number = 50) => {
     try {
-      const vehiclesData = await getVehicles();
-      setVehicles(vehiclesData.data);
-      
+      const data = await getVehicles(page, limit);
+      setVehiclesData(data);
     } catch (error) {
       console.error("Error al obtener vehiculos:", error);
     }
@@ -24,8 +24,9 @@ const Vehicles = () => {
   return( 
     <div>
       <TabsVehicles 
-        dataVehicles={vehicles}
+        dataVehicles={vehiclesData.data || []}
         onUpdateVehicles={fetchVehicles}
+        pagination={vehiclesData.pagination}
       />
     </div>
   )

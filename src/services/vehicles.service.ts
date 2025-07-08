@@ -18,9 +18,9 @@ export interface CreateVehiclePost {
   images: Image[];
 }
 
-export const getVehicles = async (): Promise<VehiclesTableData> => {
+export const getVehicles = async (page: number = 1, limit: number = 50): Promise<VehiclesTableData> => {
   try {
-    const response = await doGet<VehiclesTableData>('/vehicles', 'vehicle');
+    const response = await doGet<VehiclesTableData>(`/vehicles?page=${page}&limit=${limit}`, 'vehicle');
     return response.data;
   } catch (error) {
     return error as VehiclesTableData;
