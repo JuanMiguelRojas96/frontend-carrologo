@@ -10,10 +10,10 @@ const Clients = () => {
   const [clients, setClients] = useState<ClientsTableData>({} as ClientsTableData);
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
-    pageSize: 10,
+    pageSize: 50,
   });
   
-  const fetchClients = async (page: number = 1, limit: number = 10) => {
+  const fetchClients = async (page: number = 1, limit: number = 50) => {
     try {
       const clientsData = await getClients(page, limit);
       setClients(clientsData);
