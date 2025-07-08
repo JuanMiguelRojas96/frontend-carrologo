@@ -21,16 +21,30 @@ import { ModalCreateVehicle } from "../../templates/modal-create-vehicle/ModalCr
 
 interface TabsVehiclesProps {
   dataVehicles: Vehicle[];
-  onUpdateVehicles: () => void;
+  onUpdateVehicles: (page?: number, limit?: number) => void;
+  pagination?: { page: number; total: number };
 }
-const TabsVehicles = ({ dataVehicles, onUpdateVehicles }: TabsVehiclesProps) => {
+const TabsVehicles = ({ dataVehicles, onUpdateVehicles, pagination }: TabsVehiclesProps) => {
   const [value, setValue] = useState("1");
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("brand");
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 50,
+  });
 
   const handleChange = (newValue: string) => {
     setValue(newValue);
+  };
+
+  const handlePaginationChange = (page: number, pageSize: number) => {
+    setPaginationModel({ page: page - 1, pageSize });
+    onUpdateVehicles(page, pageSize);
+  };
+
+  const handleCreateVehicle = () => {
+    onUpdateVehicles(paginationModel.page + 1, paginationModel.pageSize);
   };
 
   const searchOptions = [
@@ -153,15 +167,25 @@ const TabsVehicles = ({ dataVehicles, onUpdateVehicles }: TabsVehiclesProps) => 
         </Tabs>
       </Box>
       <TabPanel value={value} index="1">
-        <ActiveVehicles vehicles={filteredVehicles} />
+        <ActiveVehicles 
+          vehicles={filteredVehicles} 
+          pagination={pagination}
+          paginationModel={paginationModel}
+          onPaginationChange={handlePaginationChange}
+        />
       </TabPanel>
       <TabPanel value={value} index="2">
-        <VehicleTable vehicles={filteredVehicles} />
+        <VehicleTable 
+          vehicles={filteredVehicles} 
+          pagination={pagination}
+          paginationModel={paginationModel}
+          onPaginationChange={handlePaginationChange}
+        />
       </TabPanel>
       <Dialog open={openCreateModal} maxWidth="md" fullWidth>
         <ModalCreateVehicle
           onClose={() => setOpenCreateModal(false)}
-          onVehicleCreated={onUpdateVehicles}
+          onVehicleCreated={handleCreateVehicle}
         />
       </Dialog>
     </Box>
