@@ -5,8 +5,6 @@ import {
   FormControlLabel,
   FormHelperText,
   FormControl,
-  InputLabel,
-  OutlinedInput,
   Box,
 } from "@mui/material";
 import { FieldConfig } from "../../../interfaces/modal-form.interface";
@@ -15,10 +13,11 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
+import ImageUploadField from "../image-upload-field/ImageUploadField";
 
 interface DynamicFormProps {
   fields: FieldConfig[];
-  formik: ReturnType<typeof useFormikContext<any>>;
+  formik: ReturnType<typeof useFormikContext<Record<string, any>>>;
 }
 
 const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
@@ -35,7 +34,6 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
             label,
             type,
             required,
-            multiple = false,
             disabled,
           } = field;
 
@@ -96,26 +94,13 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
                     }}
                   />
               ) : type === "file" ? (
-                <FormControl fullWidth error={!!error}>
-                  <InputLabel shrink>{label}</InputLabel>
-                  <OutlinedInput
-                    type="file"
-                    name={name}
-                    inputProps={{ multiple }}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const files = e.target.files;
-                      if (files) {
-                        formik.setFieldValue(
-                          name,
-                          multiple ? Array.from(files) : files[0]
-                        );
-                      }
-                    }}
-                    onBlur={formik.handleBlur}
-                    notched
-                  />
-                  {error && <FormHelperText>{}</FormHelperText>}
-                </FormControl>
+                <ImageUploadField
+                  field={field}
+                  formikField={formik.getFieldProps(name)}
+                  setFieldValue={formik.setFieldValue}
+                  touched={formik.touched}
+                  errors={formik.errors}
+                />
               ) : null}
             </Box>
           );

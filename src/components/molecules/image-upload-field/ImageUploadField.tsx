@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { Box, Button, Typography, Grid, IconButton } from '@mui/material';
 import { FieldConfig } from '../../../interfaces/modal-form.interface';
-import { Image } from '../../../interfaces/vehicles.interface';
+import { Image } from '../../../interfaces/commons.interface';
 import ClearIcon from '@mui/icons-material/Clear';
 
 interface ImageUploadFieldProps {
