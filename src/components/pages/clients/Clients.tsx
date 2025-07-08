@@ -8,9 +8,14 @@ import "./Clients.css";
 const Clients = () => {
 
   const [clients, setClients] = useState<ClientsTableData>({} as ClientsTableData);
-  const fetchClients = async () => {
+  const [paginationModel, setPaginationModel] = useState({
+    page: 0,
+    pageSize: 10,
+  });
+  
+  const fetchClients = async (page: number = 1, limit: number = 10) => {
     try {
-      const clientsData = await getClients();
+      const clientsData = await getClients(page, limit);
       setClients(clientsData);
     } catch (error) {
       console.error("Error al obtener clientes:", error);
@@ -18,15 +23,21 @@ const Clients = () => {
   };
 
   useEffect(() => {
-    fetchClients();
-  }, []);
+    fetchClients(paginationModel.page + 1, paginationModel.pageSize);
+  }, [paginationModel]);
+
+  const handleFetchClients = () => {
+    fetchClients(paginationModel.page + 1, paginationModel.pageSize);
+  };
 
   return( 
     <main className="clients-container">
       <div className="clients-header">
         <DataTable
           dataTable={clients}
-          onClientsUpdated={fetchClients}
+          onClientsUpdated={handleFetchClients}
+          paginationModel={paginationModel}
+          onPaginationModelChange={setPaginationModel}
         />
       </div>
     </main>

@@ -20,9 +20,9 @@ export const createClient = async <T>( values: CreateClientPost ): Promise<void>
   }
 };
 
-export const getClients = async (): Promise<ClientsTableData> => {
+export const getClients = async (page: number = 1, limit: number = 10): Promise<ClientsTableData> => {
   try {
-    const response = await doGet<ClientsTableData>('/clients', 'client');
+    const response = await doGet<ClientsTableData>(`/clients?page=${page}&limit=${limit}`, 'client');
     return response.data;
   } catch (error) {
     return error as ClientsTableData;

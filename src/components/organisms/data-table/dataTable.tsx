@@ -30,11 +30,15 @@ import ModalDeleteClient from "../../templates/modal-delete-client/ModalDeleteCl
 interface DataTableProps {
   readonly dataTable: ClientsTableData;
   onClientsUpdated: () => void;
+  paginationModel: { page: number; pageSize: number };
+  onPaginationModelChange: (model: { page: number; pageSize: number }) => void;
 }
 
 export default function DataTable({
   dataTable,
   onClientsUpdated,
+  paginationModel,
+  onPaginationModelChange,
 }: Readonly<DataTableProps>) {
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openViewModal, setOpenViewModal] = useState(false);
@@ -43,11 +47,6 @@ export default function DataTable({
   const [selectedClient, setSelectedClient] = useState<Client>({} as Client);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchField, setSearchField] = useState("fullName"); // Campo de búsqueda predeterminado
-
-  const [paginationModel, setPaginationModel] = useState({
-    page: 0,
-    pageSize: 10,
-  });
 
   const columns: GridColDef[] = [
     { field: "name", headerName: "Nombre", width: 150 },
@@ -120,12 +119,12 @@ export default function DataTable({
     { value: "isActive", label: "Estado" },
   ];
 
-  // Filtrar datos según el término de búsqueda y el campo seleccionado
+  // Como la paginación es del servidor, usamos los datos directamente
   const filteredRows = useMemo(() => {
-    if (!searchTerm) return dataTable.data;
+    if (!searchTerm) return dataTable.data || [];
 
     const lowerSearchTerm = searchTerm.toLowerCase();
-    return dataTable.data.filter((row) => {
+    return (dataTable.data || []).filter((row) => {
       if (searchField === "fullName") {
         const fullName = `${row.name} ${row.lastName}`.toLowerCase();
         return fullName.includes(lowerSearchTerm);
@@ -252,7 +251,9 @@ export default function DataTable({
           columns={columns}
           localeText={esES.components.MuiDataGrid.defaultProps.localeText}
           paginationModel={paginationModel}
-          onPaginationModelChange={setPaginationModel}
+          onPaginationModelChange={onPaginationModelChange}
+          paginationMode="server"
+          rowCount={dataTable.pagination?.total || 0}
           onCellDoubleClick={(params) => {
             if (params.field === "delete" || params.field === "edit") return;
             handleViewClient(params.row);
