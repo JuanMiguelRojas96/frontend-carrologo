@@ -32,11 +32,13 @@ const Navbar = () => {
       <header>
         <nav ref={navRef}>
           <div className="logo-container">
-            <img
-              src="/svg/logos/logoHeader.webp"
-              alt="Logo"
-              className="logo"
-            />
+            <NavLink to ="/home" onClick={() => setMenuOpen(false)}>
+              <img
+                src="/svg/logos/logoHeader.webp"
+                alt="Logo"
+                className="logo"
+              />
+            </NavLink>
           </div>
 
           <div className="nav-links-container">
@@ -53,13 +55,15 @@ const Navbar = () => {
             </div>
           </div>
 
-          <div className="nav-right">
+           <NavLink to="/" onClick={() => setMenuOpen(false)} >
+                      <div className="nav-right">
             <button
               className="logout-btn"
               onClick={handleLogout}
               aria-label="Cerrar sesión"
             >
-              <LogOut size={20} />
+                <LogOut size={20} />
+
               <span className="logout-text">Cerrar sesión</span>
             </button>
             
@@ -71,6 +75,7 @@ const Navbar = () => {
               <Menu className={menuOpen ? "menu-icon open" : "menu-icon"} />
             </button>
           </div>
+           </NavLink>
         </nav>
       </header>
       <Outlet />
