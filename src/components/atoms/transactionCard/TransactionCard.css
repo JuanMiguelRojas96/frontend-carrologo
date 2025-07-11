@@ -48,6 +48,7 @@
   height: 100%;
   width: 100%;
   border: 6px solid #d8d8d8;
+  
 }
 
 .ticket__text {
@@ -60,15 +61,52 @@
   transform: translate(-25px, 25px) rotate(-55deg);
 }
 
-p {
+.h1-transactions {
+  margin: 0;
+  padding: 5px;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+.p-transactions {
   margin: 0;
   padding: 0;
   font-size: 1rem;
   color: #333;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-family:'Courier New', Courier, monospace;
+  font-size: auto;
+  text-align: left;
+  padding-top: 2%;
 }
-h1 {
+
+.p-transactions-description {
   margin: 0;
   padding: 0;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: #333;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: left;
+
+  max-height: 75px; /* Puedes ajustar la altura a tu gusto */
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.p-transactions-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.p-transactions-description::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.p-transactions-description::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }

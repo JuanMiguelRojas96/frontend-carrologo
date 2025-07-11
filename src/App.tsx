@@ -5,6 +5,7 @@ import Clients from './components/pages/clients/Clients'
 import Header from './components/organisms/navbar/header'
 import Vehicles from './components/pages/vehicles/Vehicles.tsx'
 import Transactions from './components/pages/transactions/Transactions.tsx'
+import Home from './components/pages/home/home.tsx'
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
           <Route path="/clientes" element={<Clients/>} />
           <Route path='/vehiculos' element={<Vehicles/>}/>
           <Route path="/transacciones" element={<Transactions />} />
+          <Route path="/home" element={<Home />} />
         </Route>
       </Routes>
   )

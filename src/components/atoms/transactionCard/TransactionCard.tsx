@@ -3,38 +3,41 @@ import "./TransactionCard.css";
 import React from "react";
 
 interface ReceiptCardProps {
-  plataforma: string;
-  referencia: string;
-  fecha: string;
-  hora: string;
-  comercio: string;
+  comprador: string;
+  vendedor: string;
+  fechaInicio: string;
+  fechaFin: string;
   monto: string;
   estado: boolean | string;
-  vehiculo: string;
   placa: string;
+  descripcion: string;
+  vehiculo?: string;
 }
 
 const TransactionCard: React.FC<ReceiptCardProps> = ({
-  referencia,
-  fecha,
-  hora,
-  comercio,
+  comprador,
+  vendedor,
+  fechaInicio,
+  fechaFin,
+  descripcion,
   monto,
+  placa,
   estado,
   vehiculo,
-  placa,
 
 }) => {
   return (
     <div className="ticket">
       <div className="ticket_content">
 				<div className="ticket_header">
-					<h1>{vehiculo} {placa}</h1>
-          <p>{comercio}</p>
-					<p>Referencia: {referencia}</p>
-					<p>{fecha} - {hora}</p>
-					<p>{monto}</p>
-					<p>{estado}</p>
+					<h1 className="h1-transactions">{vehiculo} - {placa}</h1>
+          <p className="p-transactions"> Comprador: {comprador}</p>
+          <p className="p-transactions">Vendedor: {vendedor}</p>
+					<p className="p-transactions">Monto: {monto}</p>
+          <p className="p-transactions">Fecha: {fechaInicio} - {fechaFin}</p>
+					<p className="p-transactions">Estado: {estado}</p>
+          <p className="p-transactions">Descripcion:</p>
+          <p className="p-transactions-description">{descripcion}</p>
 				</div>
 			</div>
     </div>
