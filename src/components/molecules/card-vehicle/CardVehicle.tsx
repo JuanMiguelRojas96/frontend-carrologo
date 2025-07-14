@@ -5,6 +5,8 @@ import {
   CardHeader,
   CardActions,
   Dialog,
+  Snackbar,
+  Alert
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import { Vehicle } from "../../../interfaces/vehicles.interface";
@@ -20,13 +22,23 @@ interface CardVehicleProps {
 const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
   const [openView, setOpenView] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
-  const url = vehicle.url_images
+  const [showAlert, setShowAlert] = useState(false);
+  const url = vehicle.url_images;
 
   const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
 
   const handleOpenEdit = () => setOpenEdit(true);
   const handleCloseEdit = () => setOpenEdit(false);
+
+  const handleViewImages = () => {
+    if (url) {
+      window.open(url, "_blank");
+    } else {
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 3000);
+    }
+  };
 
   return (
     <>
@@ -63,8 +75,7 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
           </Button>
           <Button
             size="small"
-            onClick={() => window.open(url, "_blank")}
-            
+            onClick={handleViewImages}
             variant="contained"
           >
             Ver imagenes
@@ -97,6 +108,11 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
           onVehicleEdited={handleCloseEdit}
         />
       </Dialog>
+        <Snackbar open={showAlert} autoHideDuration={3000} onClose={() => setShowAlert(false)}>
+        <Alert severity="warning" onClose={() => setShowAlert(false)}>
+          No hay una URL asignada a este vehículo.
+        </Alert>
+      </Snackbar>
     </>
   );
 };
