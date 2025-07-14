@@ -106,6 +106,7 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
               : [],
           }}
           onVehicleEdited={handleCloseEdit}
+          imageUrl={vehicle.url_images}
         />
       </Dialog>
         <Snackbar open={showAlert} autoHideDuration={3000} onClose={() => setShowAlert(false)}>

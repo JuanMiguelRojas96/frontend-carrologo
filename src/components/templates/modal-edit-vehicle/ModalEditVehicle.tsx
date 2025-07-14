@@ -64,6 +64,7 @@ interface ModalEditVehicleProps {
   vehicleId: number;
   initialData: CreateVehiclePost;
   onVehicleEdited: () => void;
+  imageUrl?: string;
 }
 
 export const ModalEditVehicle = ({
@@ -71,6 +72,7 @@ export const ModalEditVehicle = ({
   vehicleId,
   initialData,
   onVehicleEdited,
+  imageUrl,
 }: ModalEditVehicleProps) => {
 
 const parsedInitialData = {
@@ -90,7 +92,7 @@ const parsedInitialData = {
     },
   });
 
-const handleUpdate = async (data: any) => {
+const handleUpdate = async (data: Record<string, any>) => {
   try {
     const transformedData: CreateVehiclePost = {
       ...data,
@@ -145,7 +147,13 @@ const handleUpdate = async (data: any) => {
     >
       {/* Renderiza los campos del paso actual */}
       {steps.map((step, index) => (
-    <DynamicForm key={index} fields={step.fields} formik={formik} />
+    <DynamicForm 
+      key={index} 
+      fields={step.fields} 
+      formik={formik}
+      isEditMode={true}
+      imageUrl={imageUrl}
+    />
   ))}
     </MultiStepModal>
   );

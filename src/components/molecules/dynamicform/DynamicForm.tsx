@@ -6,21 +6,37 @@ import {
   FormHelperText,
   FormControl,
   Box,
+  Button,
 } from "@mui/material";
 import { FieldConfig } from "../../../interfaces/modal-form.interface";
-import { useFormikContext } from "formik";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import ImageUploadField from "../image-upload-field/ImageUploadField";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 interface DynamicFormProps {
   fields: FieldConfig[];
-  formik: ReturnType<typeof useFormikContext<Record<string, any>>>;
+  formik: {
+    values: Record<string, any>;
+    errors: Record<string, any>;
+    touched: Record<string, any>;
+    handleChange: (e: React.ChangeEvent<any>) => void;
+    handleBlur: (e: React.FocusEvent<any>) => void;
+    setFieldValue: (field: string, value: any) => void;
+    getFieldProps: (field: string) => any;
+  };
+  isEditMode?: boolean;
+  imageUrl?: string;
 }
 
-const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
+const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik, isEditMode = false, imageUrl }) => {
+  const handleOpenImage = () => {
+    if (imageUrl) {
+      window.open(imageUrl, '_blank');
+    }
+  };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
       <Box
@@ -72,7 +88,7 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
                     }
                     label={label}
                   />
-                  {error && <FormHelperText>{}</FormHelperText>}
+                  {error && <FormHelperText>{helperText as string}</FormHelperText>}
                 </FormControl>
               ) : type === "date" ? (
                   <DatePicker
@@ -94,13 +110,27 @@ const DynamicForm: React.FC<DynamicFormProps> = ({ fields, formik }) => {
                     }}
                   />
               ) : type === "file" ? (
-                <ImageUploadField
-                  field={field}
-                  formikField={formik.getFieldProps(name)}
-                  setFieldValue={formik.setFieldValue}
-                  touched={formik.touched}
-                  errors={formik.errors}
-                />
+                isEditMode && name === "images" ? (
+                  <Box display="flex" alignItems="center" gap={2}>
+                    <Button
+                      variant="outlined"
+                      startIcon={<OpenInNewIcon />}
+                      onClick={handleOpenImage}
+                      disabled={!imageUrl}
+                      fullWidth
+                    >
+                      Ver Imagenes del Vehículo
+                    </Button>
+                  </Box>
+                ) : (
+                  <ImageUploadField
+                    field={field}
+                    formikField={formik.getFieldProps(name)}
+                    setFieldValue={formik.setFieldValue}
+                    touched={formik.touched}
+                    errors={formik.errors}
+                  />
+                )
               ) : null}
             </Box>
           );
