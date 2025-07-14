@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { LogOut, Menu } from "lucide-react";
+import { logout } from "../../../services/auth.service";
 import "./header.css";
 
 const Navbar = () => {
@@ -23,8 +24,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    // Implementar lógica de cierre de sesión aquí
-    console.log("Cerrando sesión...");
+    logout();
   };
 
   return (
@@ -55,8 +55,7 @@ const Navbar = () => {
             </div>
           </div>
 
-           <NavLink to="/" onClick={() => setMenuOpen(false)} >
-                      <div className="nav-right">
+           <div className="nav-right">
             <button
               className="logout-btn"
               onClick={handleLogout}
@@ -75,7 +74,6 @@ const Navbar = () => {
               <Menu className={menuOpen ? "menu-icon open" : "menu-icon"} />
             </button>
           </div>
-           </NavLink>
         </nav>
       </header>
       <Outlet />
