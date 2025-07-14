@@ -43,6 +43,9 @@ const Navbar = () => {
 
           <div className="nav-links-container">
             <div className={menuOpen ? "nav-links open" : "nav-links"}>
+              <NavLink to="/home" onClick={() => setMenuOpen(false)}>
+                Inicio
+              </NavLink>
               <NavLink to="/clientes" onClick={() => setMenuOpen(false)}>
                 Clientes
               </NavLink>
