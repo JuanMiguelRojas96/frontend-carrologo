@@ -111,7 +111,7 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
       </Dialog>
         <Snackbar open={showAlert} autoHideDuration={3000} onClose={() => setShowAlert(false)}>
         <Alert severity="warning" onClose={() => setShowAlert(false)}>
-          No hay una URL asignada a este vehículo.
+          No hay una URL asignada a este vehículo .
         </Alert>
       </Snackbar>
     </>
