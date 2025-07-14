@@ -16,6 +16,10 @@
     padding: 10%;
 }
 
+.login-input {
+    width: 100%;
+}
+
 #outlined-basic{
     background-color: #EAF4F5;
 }

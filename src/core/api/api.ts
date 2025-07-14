@@ -14,13 +14,61 @@ interface ApiError {
 }
 
 // Tipo para el parámetro apiType
-type ApiType = 'client' | 'vehicle';
+type ApiType = 'client' | 'vehicle' | 'auth';
 
 // Mapeo de apiType a la variable de entorno correspondiente
 const baseUrlMap: Record<ApiType, string> = {
   client: import.meta.env.VITE_CLIENT_BASE_URL as string,
   vehicle: import.meta.env.VITE_VEHICLE_BASE_URL as string,
+  auth: import.meta.env.VITE_AUTH_BASE_URL as string,
 };
+
+// Token management
+export const getToken = (): string | null => {
+  return sessionStorage.getItem('authToken');
+};
+
+export const setToken = (token: string): void => {
+  sessionStorage.setItem('authToken', token);
+};
+
+export const removeToken = (): void => {
+  sessionStorage.removeItem('authToken');
+};
+
+// Configure axios interceptors
+axios.interceptors.request.use(
+  (config) => {
+    if (!config.headers) {
+      config.headers = {};
+    }
+    
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    if (config.url?.includes(import.meta.env.VITE_AUTH_BASE_URL)) {
+      config.headers['x-api-key'] = import.meta.env.VITE_AUTH_X_API_KEY;
+    }
+    
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+axios.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      removeToken();
+      window.location.href = '/';
+    }
+    return Promise.reject(error);
+  }
+);
 
 // Generic doPost function
 export const doPost = async <T, D>(
