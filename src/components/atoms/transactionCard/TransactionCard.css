@@ -1,0 +1,112 @@
+
+
+.ticket {
+  position: relative;
+  box-sizing: border-box;
+  width: 385px;
+  height: 350px;
+  margin: 8px auto 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: #fbfbfb;
+  box-shadow: 2px 2px 15px 0px #313131;
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    height: 6px;
+    width: 370px;
+  }
+
+  &:before {
+    top: -5px;
+    background: radial-gradient(
+        circle,
+        transparent,
+        transparent 50%,
+        #fbfbfb 50%,
+        #fbfbfb 100%
+      ) -7px -8px / 16px 16px repeat-x;
+  }
+
+  &:after {
+    bottom: -5px;
+    background: radial-gradient(
+        circle,
+        transparent,
+        transparent 50%,
+        #fbfbfb 50%,
+        #fbfbfb 100%
+      ) -7px -2px / 16px 16px repeat-x;
+  }
+}
+
+.ticket__content {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  border: 6px solid #d8d8d8;
+  
+}
+
+.ticket__text {
+  width: 400px;
+  font-family: "Helvetica", "Arial", sans-serif;
+  font-size: 3rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #c6dede;
+  transform: translate(-25px, 25px) rotate(-55deg);
+}
+
+.h1-transactions {
+  margin: 0;
+  padding: 5px;
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+.p-transactions {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-family:'Courier New', Courier, monospace;
+  font-size: auto;
+  text-align: left;
+  padding-top: 2%;
+}
+
+.p-transactions-description {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-family: 'Courier New', Courier, monospace;
+  text-align: left;
+
+  max-height: 75px; /* Puedes ajustar la altura a tu gusto */
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+.p-transactions-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.p-transactions-description::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+}
+
+.p-transactions-description::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
