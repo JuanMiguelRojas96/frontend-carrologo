@@ -86,12 +86,12 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
                   {
                     base64: vehicle.url_images,
                     name: "imagen-vehiculo.jpg",
-                    type: "image/jpeg",
                   },
                 ]
               : [],
           }}
           onVehicleEdited={handleCloseEdit}
+          imageUrl={vehicle.url_images}
         />
       </Dialog>
     </>
