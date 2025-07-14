@@ -13,12 +13,16 @@ function App() {
   return (
       <Routes>
         <Route path="/" element={<Login />} />
-
+        <Route element={
+          <ProtectedRoute>
+            <Header />
+          </ProtectedRoute>
+        }>
           <Route path="/clientes" element={<Clients/>} />
           <Route path='/vehiculos' element={<Vehicles/>}/>
           <Route path="/transacciones" element={<Transactions />} />
           <Route path="/home" element={<Home />} />
-
+        </Route>
       </Routes>
   )
 }
