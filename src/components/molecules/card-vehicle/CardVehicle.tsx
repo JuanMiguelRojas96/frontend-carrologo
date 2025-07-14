@@ -3,7 +3,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  CardMedia,
   CardActions,
   Dialog,
 } from "@mui/material";
@@ -12,6 +11,7 @@ import { Vehicle } from "../../../interfaces/vehicles.interface";
 import { ModalEditVehicle } from "../../templates/modal-edit-vehicle/ModalEditVehicle";
 import { ModalViewVehicle } from "../../templates/modal-view-vehicle/ModalViewVehicle";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { DirectionsCar } from "@mui/icons-material";
 
 interface CardVehicleProps {
   vehicle: Vehicle;
@@ -20,6 +20,7 @@ interface CardVehicleProps {
 const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
   const [openView, setOpenView] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
+  const url = vehicle.url_images
 
   const handleOpenView = () => setOpenView(true);
   const handleCloseView = () => setOpenView(false);
@@ -31,14 +32,9 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
     <>
       <Card>
         <CardHeader
-          title={`${vehicle.brand} ${vehicle.line}`}
+          avatar={<DirectionsCar sx={{ fontSize: 50 }} />}
+          title={<strong style={{ fontSize: '1.2rem' }}>{`${vehicle.brand} ${vehicle.line}`}</strong>}
           subheader={new Date(vehicle.model).getFullYear().toString()}
-        />
-        <CardMedia
-          component="img"
-          height="194"
-          image={vehicle.url_images || "/images/image-not-found.png"}
-          alt={vehicle.url_images || "Vehicle"}
         />
         <CardContent>
           <p>
@@ -65,6 +61,14 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
           >
             Editar
           </Button>
+          <Button
+            size="small"
+            onClick={() => window.open(url, "_blank")}
+            
+            variant="contained"
+          >
+            Ver imagenes
+          </Button>
         </CardActions>
       </Card>
 
@@ -86,7 +90,6 @@ const CardVehicle: React.FC<CardVehicleProps> = ({ vehicle }) => {
                   {
                     base64: vehicle.url_images,
                     name: "imagen-vehiculo.jpg",
-                    type: "image/jpeg",
                   },
                 ]
               : [],
